@@ -104,7 +104,7 @@ function ContactForm() {
       </div>
       <div className={classes.control}>
         <label htmlFor="message">Vos requetes </label>
-        <textarea id="messge" rows="5" required value={enteredMessage} onChange={event => setEnteredMessage(event.target.value)}></textarea>
+        <textarea id="message" rows="5" required value={enteredMessage} onChange={event => setEnteredMessage(event.target.value)}></textarea>
       </div>
 
       <div className={classes.actions}>

@@ -27,7 +27,7 @@ import {MongoClient} from 'mongodb'
       let client;
       try{
         console.log(newMessage);
-         client = await MongoClient.connect('mongodb+srv://Willer:@lain2018@cluster0.pn2go.mongodb.net/my-site?retryWrites=true&w=majority');
+        client = await MongoClient.connect('mongodb+srv://Willer:@lain2018@cluster0.pn2go.mongodb.net/mon-site?retryWrites=true&w=majority');
 
       }catch(error){
         res.status(500).json({message: 'could not connect database'})

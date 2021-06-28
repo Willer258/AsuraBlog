@@ -62,3 +62,14 @@ button {
   font: inherit;
   cursor: pointer;
 }
+
+button{
+  border-radius: 5px;
+  padding: 9px;
+  background: rgb(95, 93, 93);
+  color: #ffffff;
+}
+
+p{
+  color: white;
+}

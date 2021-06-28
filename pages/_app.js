@@ -1,18 +1,20 @@
-import Head from 'next/head'
 
+import { AuthContextProvider } from '../stores/authContext'
 import { Fragment } from 'react'
 import '../styles/globals.css'
 import Layout from '../components/layout/layout'
 function MyApp({ Component, pageProps }) {
   
-  return(
+  return (
     <Fragment>
-      <Layout>
-        <Head>
-          <meta name='viewport' content='width=device-width, initial-scale=1' />
-        </Head>
-        <Component {...pageProps} />
-      </Layout>
+       
+        <AuthContextProvider>
+           <Layout>
+          <Component {...pageProps} />
+             </Layout>
+        </AuthContextProvider>
+     
+    
     </Fragment>
   )
 }

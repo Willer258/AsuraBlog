@@ -1,10 +1,8 @@
 //components
-import Logo from './logo'
 //module-components
 import Link from 'next/link'
 
 //CSS
-import classes from './main-navigation.module.css'
 
 
 function MainNavigation() {
