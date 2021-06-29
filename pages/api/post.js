@@ -29,9 +29,10 @@ async function handler(req, res){
     let client;
     try{
       console.log(newPost)
-      client = await MongoClient.connect('mongodb + srv://Willer:@lain2018@cluster0.pn2go.mongodb.net/myFirstDatabase?retryWrites=true&w=majority');
+      client = await MongoClient.connect('mongodb + srv://Willer:@lain2018@cluster0.pn2go.mongodb.net/AsuraBlog?retryWrites=true&w=majority');
     }catch(error){
       res.status(500).json({message:'could not connect database'})
+      return;
     }
     const db = client.db();
 

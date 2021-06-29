@@ -27,16 +27,15 @@ import {MongoClient} from 'mongodb'
       let client;
       try{
         console.log(newMessage);
-        client = await MongoClient.connect('mongodb+srv://Willer:@lain2018@cluster0.pn2go.mongodb.net/mon-site?retryWrites=true&w=majority');
-
+        client = await MongoClient.connect('mongodb + srv://Willer:j4nRGwshEy3qSxQ8@cluster0.pn2go.mongodb.net/AsuraBlog?retryWrites=true&w=majority');
       }catch(error){
-        res.status(500).json({message: 'could not connect database'})
+        res.status(500).json({message: 'could not connect database'});
+        return;
       }
      const db = client.db();
 
      try{
-
-       const result = await db.collection('messages').insertOne(newMessage);
+       const result = await db.collection('Message').insertOne(newMessage);
        newMessage.id = result.insertedId;
      } catch(error){
       client.close();
