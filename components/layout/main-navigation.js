@@ -2,6 +2,9 @@
 //module-components
 import Link from 'next/link'
 
+import Logo from './logo'
+import classes from './main-navigation.module.css'
+
 //CSS
 
 
@@ -20,6 +23,9 @@ function MainNavigation() {
           </li>
           <li>
             <Link href="/contact">Nous contacter</Link>
+          </li>
+          <li>
+            <Link href="/createPost">Creer un post</Link>
           </li>
         </ul>
       </nav>
