@@ -1,35 +1,54 @@
 //components
 //module-components
 import Link from 'next/link'
-
+import nookies from 'nookies';
+import firebase from "firebase/app";
 import Logo from './logo'
-import classes from './main-navigation.module.css'
+import classes from './main-navigation.module.css';
+
 
 //CSS
+//databse components
+import { useAuth } from "../../firebase/auth";
 
 
 function MainNavigation() {
-  return (
-    <header className={classes.header}>
-      <Link href='/'>
-        <a>
-          <Logo />
-        </a>
-      </Link>
-      <nav>
-        <ul>
-          <li>
-            <Link href="/posts">Nos posts</Link>
-          </li>
-          <li>
-            <Link href="/contact">Nous contacter</Link>
-          </li>
-          <li>
-            <Link href="/createPost">Creer un post</Link>
-          </li>
-        </ul>
-      </nav>
-    </header>
-  )
+  const { user } = useAuth();
+  let classesHidden =  user ? 'hidden' : ''
+  let classesView = !user ? 'hidden' :''
+    return (
+      <header className={classes.header}>
+        <Link href='/'>
+          <a>
+            <Logo />
+          </a>
+        </Link>
+        <nav>
+          <ul>
+            <li className="text-white">   {` ${user ? user.email : ""}`}</li>
+            <li>
+              <Link href="/posts">Les  posts</Link>
+            </li>
+            <li>
+              <Link href="/contact">Nous contacter</Link>
+            </li>
+            <li className={classesView} isDisabled={!user}>
+              <Link href="/createPost">Creer un post</Link>
+            </li>
+            <li></li>
+            <li><button variant="solid" variantColor="green" width='100%' isDisabled={user} className={classesHidden+' bg-green-500 p-2'} >
+              <Link href="/login">
+                <a>Connexion</a>
+              </Link>
+            </button> <button onClick={async () => {
+              await firebase.auth().signOut();
+              window.location.href = "/"
+            }} className={classesView+' bg-red-500 p-2'}>Deconnexion</button></li>
+          </ul>
+        </nav>
+      </header>
+    ) 
 
-} export default MainNavigation;
+} 
+
+export default MainNavigation;
