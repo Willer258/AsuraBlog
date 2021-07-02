@@ -7,9 +7,10 @@ import classes from './post-content.module.css'
 
 
 function PostContent(props) {
-  const {post} = props;
-  const imagePath = `/image/posts/${post.image}`;
 
+  const {post} = props;
+  const imagePath = props.post.file ;
+    console.log( props.post.file)
   const customRenderers = {
     // image(image) {
     //   return (
@@ -21,7 +22,7 @@ function PostContent(props) {
     //     />
     //   );
     // },
-    paragraph(paragraph) {
+  /*   paragraph(paragraph) {
       const { node } = paragraph;
 
       if (node.children[0].type === 'image') {
@@ -40,7 +41,7 @@ function PostContent(props) {
       }
 
       return <p>{paragraph.children}</p>;
-    },
+    }, */
   };
   return <article className={classes.content}>
     <PostHeader title={post.title} image={imagePath} />

@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import  'tailwindcss/tailwind.css'
 import classes from './create-post.module.css'
 import Notification from "../ui/notification";
+import fire from "../../fireconfig";
 
-async function CreateNewPost(postDetails){
+const db = fire.firestore()
+/*async function CreateNewPost(postDetails){
   const response = await fetch('/api/post',{
     method:'POST',
     body: JSON.stringify(postDetails),
@@ -15,75 +17,56 @@ async function CreateNewPost(postDetails){
   if (!response.ok){
     throw new Error(data.message || 'Something went wrong');
   }
-}
+}*/
 
 function CreatePost(){
   const [enteredTitle, setEnteredTitle] = useState('');
   const [enteredDescription, setEnteredDescription] = useState('');
   const [enteredContent, setEnteredContent] = useState('');
-  const [requestStatus, setRequestStatus] = useState('');
-  const [requestError, setRequestError] = useState('');
+  const [notification, setNotification] = useState('');
+  const date = new Date().toISOString();
+  const [fileUrl , setFileUrl] = useState(null)
+
+  const onFileChange = async (e) => {
+    const file = e.target.files[0];
+    const storageRef = fire.storage().ref();
+    const fileRef = storageRef.child(file.name);
+    await fileRef.put(file);
+    setFileUrl( await fileRef.getDownloadURL());
+  };
   
-  useEffect(() => {
-    if (requestStatus === 'success' || requestStatus === 'error') {
-      const timer = setTimeout(() => {
-        setRequestStatus(null);
-        setRequestError(null);
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [requestStatus])
-
-
-  async function sendPostHandler(event) {
+  console.log(fileUrl)
+  const handleSubmit = async (event) => {
+    
     event.preventDefault();
 
-    setRequestStatus('pending');
-    try {
-
-      await CreateNewPost({
-        title: enteredTitle,
-        description: enteredDescription,
-        content: enteredContent,
-      })
-      setRequestStatus('success');
-      setEnteredTitle('')
-      setEnteredDescription('')
-      setEnteredContent('')
-
-    } catch (error) {
-      setRequestError(error.message)
-      setRequestStatus('error');
-    }
+    console.log({
+      'title': enteredTitle,
+      'content':enteredContent,
+      'excerpt':enteredDescription,
+      'file':fileUrl
+      
+    });
+    setNotification('Post cree');
+    
+    setTimeout(() => {
+      setNotification('')
+    }, 2000)
+  
+    setEnteredTitle('');
+    setEnteredDescription('');
+    setEnteredContent('');
+    setFileUrl()
+    
+   await fire.firestore().collection('blog').add({title:enteredTitle,excerpt:enteredDescription,content:enteredContent,date:date,file:fileUrl})
+    
 
   }
 
-  let notification;
-  if (requestStatus === 'pending') {
-    notification = {
-      status: 'pending',
-      title: 'Envoi du message ...',
-      message: 'Votre message est en coup d\'envoi',
-    }
-  }
-  if (requestStatus === 'success') {
-    notification = {
-      status: 'success',
-      title: 'Parfait',
-      message: 'Votre message a ete bien envoye'
-    }
-  }
-  if (requestStatus === 'error') {
-    notification = {
-      status: 'error',
-      title: 'Echec :( ',
-      message: requestError,
-    }
-  }
-
+  
   return <section className={classes.contact}>
     <h1>Nouveau Post</h1>
-    <form className={classes.form} onSubmit={sendPostHandler}>
+    <form className={classes.form} onSubmit={handleSubmit}>
       <div className={classes.controls}>
         <div className={classes.control}>
           <label htmlFor="title">Title</label>
@@ -96,18 +79,29 @@ function CreatePost(){
         <input type="text" id="description" required value={enteredDescription} onChange={event => setEnteredDescription(event.target.value)} />
       </div>
       <div className={classes.control}>
-        <label htmlFor="description">Description</label>
-        <textarea id="description" rows="5" required value={enteredContent} onChange={event => setEnteredContent(event.target.value)}></textarea>
+        <label htmlFor="description">Contenu</label>
+        <textarea id="description" rows="10" required value={enteredContent} onChange={event => setEnteredContent(event.target.value)}></textarea>
+      </div>
+
+      <div className={classes.control}>
+      <label htmlFor="image">Image de couverture</label>
+          <input type='file' onChange={onFileChange}/>
       </div>
 
 
       <div className={classes.actions}>
-        <button>Envoyer</button>
+        {!fileUrl && <p>Patientez .....</p>}
+        
+       { !fileUrl && <button disabled >Envoyer</button>}
+       { fileUrl && <button >Envoyer</button>}
       </div>
 
 
-      {notification && <Notification status={notification.status} title={notification.title} message={notification.message} />}
     </form>
+    {notification && <Notification  title={notification} />}
+
   </section>
-}
+  }
 export default CreatePost;
+
+     
