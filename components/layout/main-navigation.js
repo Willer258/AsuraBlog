@@ -1,7 +1,6 @@
 //components
 //module-components
 import Link from 'next/link'
-import nookies from 'nookies';
 import firebase from "firebase/app";
 import Logo from './logo'
 import classes from './main-navigation.module.css';

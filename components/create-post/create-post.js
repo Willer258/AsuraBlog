@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import  'tailwindcss/tailwind.css'
 import classes from './create-post.module.css'
 import Notification from "../ui/notification";
+import fire from "../../fireconfig";
 
-async function CreateNewPost(postDetails){
+/*async function CreateNewPost(postDetails){
   const response = await fetch('/api/post',{
     method:'POST',
     body: JSON.stringify(postDetails),
@@ -15,15 +16,32 @@ async function CreateNewPost(postDetails){
   if (!response.ok){
     throw new Error(data.message || 'Something went wrong');
   }
-}
+}*/
 
 function CreatePost(){
+
   const [enteredTitle, setEnteredTitle] = useState('');
   const [enteredDescription, setEnteredDescription] = useState('');
   const [enteredContent, setEnteredContent] = useState('');
   const [requestStatus, setRequestStatus] = useState('');
   const [requestError, setRequestError] = useState('');
   
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    console.log({
+      'titre': enteredTitle,
+      'contenu':enteredContent,
+      'description':enteredDescription,
+      
+    });
+    setEnteredTitle('');
+    setEnteredDescription('');
+    setEnteredContent('');
+    fire.firestore().collection('blog').add({titre:enteredTitle,description:enteredDescription,contenu:enteredContent})
+
+  }
+
   useEffect(() => {
     if (requestStatus === 'success' || requestStatus === 'error') {
       const timer = setTimeout(() => {
@@ -35,28 +53,6 @@ function CreatePost(){
   }, [requestStatus])
 
 
-  async function sendPostHandler(event) {
-    event.preventDefault();
-
-    setRequestStatus('pending');
-    try {
-
-      await CreateNewPost({
-        title: enteredTitle,
-        description: enteredDescription,
-        content: enteredContent,
-      })
-      setRequestStatus('success');
-      setEnteredTitle('')
-      setEnteredDescription('')
-      setEnteredContent('')
-
-    } catch (error) {
-      setRequestError(error.message)
-      setRequestStatus('error');
-    }
-
-  }
 
   let notification;
   if (requestStatus === 'pending') {
@@ -83,7 +79,7 @@ function CreatePost(){
 
   return <section className={classes.contact}>
     <h1>Nouveau Post</h1>
-    <form className={classes.form} onSubmit={sendPostHandler}>
+    <form className={classes.form} onSubmit={handleSubmit}>
       <div className={classes.controls}>
         <div className={classes.control}>
           <label htmlFor="title">Title</label>
@@ -106,8 +102,11 @@ function CreatePost(){
       </div>
 
 
-      {notification && <Notification status={notification.status} title={notification.title} message={notification.message} />}
     </form>
+    {notification && <Notification status={notification.status} title={notification.title} message={notification.message} />}
+
   </section>
-}
+  }
 export default CreatePost;
+
+     

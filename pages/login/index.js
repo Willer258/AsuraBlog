@@ -3,6 +3,7 @@ import firebaseClient from '../../firebase/firebaseClient';
 import firebase from "firebase/app";
 import "firebase/auth"
 import classes from './login.module.css'
+import 'tailwindcss/tailwind.css'
 
 export default function Login() {
   firebaseClient();
@@ -13,7 +14,7 @@ export default function Login() {
     <div className={classes.contact}>
 
       <h1>
-        Login
+        Authentification
       </h1>
       <div className={classes.form}>
         <div>
@@ -33,25 +34,10 @@ export default function Login() {
      <div>
        
      </div>
+    <div className='flex space-x-5 justify-center mt-5'>
+  
       <div>
-        <button minWidth="40%" variant="solid" variantColor="blue" isDisabled={email === "" || password === ""} onClick={async () => {
-          await firebase.auth().createUserWithEmailAndPassword(email, password).then(function () {
-            window.location.href = "/"
-          }).catch(function (error) {
-            error = error.message;
-            console.log({
-              title: 'il y a erreur',
-              description: message,
-              status: 'error',
-              duraton: 9000,
-              isDisabled: true,
-            })
-          })
-        }} >Conception du compte</button>
-
-      </div>
-      <div>
-        <button isDisabled={email === "" || password === ""} onClick={async () => {
+        <button className={'bg-green-500 p-3 focus:bg-green-600'} isDisabled={email === "" || password === ""} onClick={async () => {
           await firebase.auth().signInWithEmailAndPassword(email, password).then(function () {
             window.location.href = "/"
           }).catch(function (error) {
@@ -64,8 +50,26 @@ export default function Login() {
               isDisabled: true,
             })
           })
-        }} >Authentification</button>
+        }} >Connexion</button>
       </div>
+      <div>
+        <button className={'bg-blue-500 p-3 focus:bg-blue-600'}  isDisabled={email === "" || password === ""} onClick={async () => {
+          await firebase.auth().createUserWithEmailAndPassword(email, password).then(function () {
+            window.location.href = "/"
+          }).catch( (error) => {
+            error = error.message;
+            console.log({
+              title: 'il y a erreur',
+              description: message,
+              status: 'error',
+              duraton: 9000,
+              isDisabled: true,
+            })
+          })
+        }} >Inscription</button>
+
+      </div>
+    </div>
     </div>
   )
 }
