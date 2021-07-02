@@ -2,6 +2,7 @@
 title: 'Gojo Satoru le personnage le plus cote de 2020'
 date: '2021-01-02'
 image: gojo.png
+id: vfknb654b64b
 excerpt: Comment ne pas attendre le perso representant les terres d'Inazuma la terre representant le japon.
 isFeatured: true
 ---

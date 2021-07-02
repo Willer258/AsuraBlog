@@ -2,8 +2,10 @@ import  Head from 'next/head'
 import { Fragment } from 'react';
 import PostContent from "../../components/posts/post-detail/post-content";
 import fire from '../../fireconfig'
+import Comments from '../../components/comment-post/comment';
 import Link from 'next/link'
 const Blog = (props) => {
+  console.log(props)
   return (
     <Fragment>
     <Head>
@@ -12,6 +14,7 @@ const Blog = (props) => {
     </Head>
 
     <PostContent post={props} />
+    <Comments id={props.id}  />
   </Fragment>
 
    /*  <div>
@@ -34,13 +37,15 @@ export const getServerSideProps = async ({ query }) => {
     .then(result => {
       content['title'] = result.data().title;
       content['content'] = result.data().content;
-      content['excerpt'] =result.data().excerpt
+      content['excerpt'] =result.data().excerpt;
+      
     });
 return {
     props: {
       title: content.title,
       content: content.content,
       excerpt: content.excerpt,
+      id:query.id
     }
   }
 }

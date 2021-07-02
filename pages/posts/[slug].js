@@ -1,6 +1,6 @@
 import  Head from 'next/head'
 import { Fragment } from 'react';
-
+import Comments from '../../components/comment-post/comment';
 import PostContent from "../../components/posts/post-detail/post-content";
 import { getPostData, getPostFiles } from "../../lib/posts-util";
 
@@ -12,6 +12,7 @@ function PostDetailPage(props){
     </Head>
 
     <PostContent post={props.post} />
+    <Comments id={props.post.id} />
   </Fragment>
 }
 

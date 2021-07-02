@@ -77,7 +77,7 @@ function CreatePost(){
 
 
     </form>
-    {notification && <Notification  message={notification} />}
+    {notification && <Notification  title={notification} />}
 
   </section>
   }

@@ -2,6 +2,7 @@
 title: 'Ayaka le perso le plus attendu sur genshin'
 date: '2022-10-15'
 image: ayakar.png
+id: hdujjksois5786847
 excerpt: Comment ne pas attendre le perso representant les terres d'Inazuma la terre representant le japon.
 isFeatured: true
 ---

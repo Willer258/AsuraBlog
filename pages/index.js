@@ -12,6 +12,7 @@ import fire from "../fireconfig";
 import { useState, useEffect } from 'react';
 
 function MyHomePage(props) {
+  
   const [blogs, setBlogs] = useState([])
 
   useEffect(() => {
@@ -25,7 +26,6 @@ function MyHomePage(props) {
         setBlogs(blogs);
       });
   }, []);
-  console.log(blogs)
   return (
     <Fragment>
       <Head>
@@ -34,7 +34,7 @@ function MyHomePage(props) {
       </Head>
 
       <Hero />
-      <FeaturedPosts posts={props.posts} />
+      <FeaturedPosts posts={props.posts}/>
       <NewPosts posts={blogs}  />
 
       
@@ -46,12 +46,19 @@ function MyHomePage(props) {
 
 export function getStaticProps() {
   const FeaturedPosts = getFeaturedPosts();
+  
   return {
     props: {
       posts: FeaturedPosts
+      
     },
-    revalidate: 60
+    revalidate: 60,
+
+    
+
+  
   }
+ 
 }
 
 export default MyHomePage;
