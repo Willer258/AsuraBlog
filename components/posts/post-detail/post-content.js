@@ -7,9 +7,10 @@ import classes from './post-content.module.css'
 
 
 function PostContent(props) {
-  const {post} = props;
-  const imagePath = `/image/posts/${post.image}`;
 
+  const {post} = props;
+  const imagePath = props.post.file ;
+    console.log( props.post.file)
   const customRenderers = {
     // image(image) {
     //   return (

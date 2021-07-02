@@ -38,6 +38,7 @@ export const getServerSideProps = async ({ query }) => {
       content['title'] = result.data().title;
       content['content'] = result.data().content;
       content['excerpt'] =result.data().excerpt;
+      content['file'] =result.data().file;
       
     });
 return {
@@ -45,7 +46,8 @@ return {
       title: content.title,
       content: content.content,
       excerpt: content.excerpt,
-      id:query.id
+      id:query.id,
+      file:content.file
     }
   }
 }

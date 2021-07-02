@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import 'firebase/storage'
 var firebaseConfig = {
   apiKey: "AIzaSyCiOISkNAq8sEOmEQxW8ysMQvMXAiiBigg",
   authDomain: "nextjs-with-firebase-6116f.firebaseapp.com",

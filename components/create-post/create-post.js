@@ -4,6 +4,7 @@ import classes from './create-post.module.css'
 import Notification from "../ui/notification";
 import fire from "../../fireconfig";
 
+const db = fire.firestore()
 /*async function CreateNewPost(postDetails){
   const response = await fetch('/api/post',{
     method:'POST',
@@ -19,20 +20,31 @@ import fire from "../../fireconfig";
 }*/
 
 function CreatePost(){
-
   const [enteredTitle, setEnteredTitle] = useState('');
   const [enteredDescription, setEnteredDescription] = useState('');
   const [enteredContent, setEnteredContent] = useState('');
   const [notification, setNotification] = useState('');
   const date = new Date().toISOString();
+  const [fileUrl , setFileUrl] = useState(null)
 
-  const handleSubmit = (event) => {
+  const onFileChange = async (e) => {
+    const file = e.target.files[0];
+    const storageRef = fire.storage().ref();
+    const fileRef = storageRef.child(file.name);
+    await fileRef.put(file);
+    setFileUrl( await fileRef.getDownloadURL());
+  };
+  
+  console.log(fileUrl)
+  const handleSubmit = async (event) => {
+    
     event.preventDefault();
 
     console.log({
       'title': enteredTitle,
       'content':enteredContent,
       'excerpt':enteredDescription,
+      'file':fileUrl
       
     });
     setNotification('Post cree');
@@ -44,8 +56,9 @@ function CreatePost(){
     setEnteredTitle('');
     setEnteredDescription('');
     setEnteredContent('');
+    setFileUrl()
     
-    fire.firestore().collection('blog').add({title:enteredTitle,excerpt:enteredDescription,content:enteredContent,date:date})
+   await fire.firestore().collection('blog').add({title:enteredTitle,excerpt:enteredDescription,content:enteredContent,date:date,file:fileUrl})
     
 
   }
@@ -70,9 +83,17 @@ function CreatePost(){
         <textarea id="description" rows="10" required value={enteredContent} onChange={event => setEnteredContent(event.target.value)}></textarea>
       </div>
 
+      <div className={classes.control}>
+      <label htmlFor="image">Image de couverture</label>
+          <input type='file' onChange={onFileChange}/>
+      </div>
+
 
       <div className={classes.actions}>
-        <button>Envoyer</button>
+        {!fileUrl && <p>Patientez .....</p>}
+        
+       { !fileUrl && <button disabled >Envoyer</button>}
+       { fileUrl && <button >Envoyer</button>}
       </div>
 
 
