@@ -1,10 +1,10 @@
-import postCreated from './post-created';
+import PostCreated from './post-created';
 import classes from './posts-grid.module.css'
-function PostsGrid(props){
+function NewPostsGrid(props){
 
-  const {blogs} = props;
+  const {posts} = props;
   return <ul className={classes.grid}>
-    {blogs.map(blog => <postCreated key={post.slug}  blog={blog} />)}
+    {posts.map(post => <PostCreated key={post.slug}  post={post} />)}
   </ul>
 }
-export default PostsGrid;
+export default NewPostsGrid;

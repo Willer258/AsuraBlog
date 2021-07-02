@@ -24,7 +24,8 @@ function CreatePost(){
   const [enteredDescription, setEnteredDescription] = useState('');
   const [enteredContent, setEnteredContent] = useState('');
   const [notification, setNotification] = useState('');
-  
+  const date = new Date().toISOString();
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -44,7 +45,7 @@ function CreatePost(){
     setEnteredDescription('');
     setEnteredContent('');
     
-    fire.firestore().collection('blog').add({title:enteredTitle,excerpt:enteredDescription,content:enteredContent})
+    fire.firestore().collection('blog').add({title:enteredTitle,excerpt:enteredDescription,content:enteredContent,date:date})
     
 
   }
@@ -66,7 +67,7 @@ function CreatePost(){
       </div>
       <div className={classes.control}>
         <label htmlFor="description">Contenu</label>
-        <textarea id="description" rows="5" required value={enteredContent} onChange={event => setEnteredContent(event.target.value)}></textarea>
+        <textarea id="description" rows="10" required value={enteredContent} onChange={event => setEnteredContent(event.target.value)}></textarea>
       </div>
 
 

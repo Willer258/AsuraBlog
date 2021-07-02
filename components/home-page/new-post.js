@@ -1,11 +1,11 @@
-import PostsGrid from '../posts/posts-grid';
+import NewPostsGrid from '../posts/new-posts-grid';
 import classes from './featured-post.module.css'
 
 function NewPosts(props){
   return <section className={classes.latest}>
     <h2> Nouveau Posts </h2>
 
-    <PostsGrid posts={props.posts}/>
+    <NewPostsGrid posts={props.posts}/>
 
   </section>
 }

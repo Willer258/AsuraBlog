@@ -2,8 +2,8 @@ import classes from './post-item.module.css'
 import Link from 'next/link';
 import Image from 'next/image'
 
-function postCreated(props) {
-const { title, image, excerpt, date, slug }=props.post;
+function  PostCreated(props) {
+const { title, image, excerpt, date, id }=props.post;
 
 const formattedDate = new Date(date).toLocaleDateString('en-US',{
   day:'numeric',
@@ -12,9 +12,9 @@ const formattedDate = new Date(date).toLocaleDateString('en-US',{
 });
 
 const imagePath = `/image/posts/${image}`;
-const linkPath=`/posts/${slug}`
+const linkPath=`/newPosts/${id}`
   return <li className={classes.post}>
-    <Link href={linkPath}>
+    <Link href="/newPosts/[id]" as={'/newPosts/' + id}>
       <a>
         <div className={classes.image}>
           <Image src={imagePath} alt={title} width={300} height={200} layout='responsive' />
@@ -28,4 +28,4 @@ const linkPath=`/posts/${slug}`
     </Link>
   </li>
 }
-export default postCreated;
+export default PostCreated;
