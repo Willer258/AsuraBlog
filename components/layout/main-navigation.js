@@ -31,11 +31,11 @@ function MainNavigation() {
             <li>
               <Link href="/contact">Nous contacter</Link>
             </li>
-            <li className={classesView} isDisabled={!user}>
+            <li className={classesView}>
               <Link href="/createPost">Creer un post</Link>
             </li>
             <li></li>
-            <li><button variant="solid" variantColor="green" width='100%' isDisabled={user} className={classesHidden+' bg-green-500 p-2'} >
+            <li><button variant="solid" width='100%'  className={classesHidden+' bg-green-500 p-2'} >
               <Link href="/login">
                 <a>Connexion</a>
               </Link>
