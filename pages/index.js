@@ -17,7 +17,7 @@ function MyHomePage(props) {
 
   useEffect(() => {
     fire.firestore()
-      .collection('blog')
+      .collection('blogs')
       .onSnapshot(snap => {
         const blogs = snap.docs.map(doc => ({
           id: doc.id,
