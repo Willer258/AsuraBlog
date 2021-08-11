@@ -23,7 +23,7 @@ function MyHomePage(props) {
           id: doc.id,
           ...doc.data()
         }));
-        setBlogs(blogs);
+        setBlogs(blog);
       });
   }, []);
   return (
